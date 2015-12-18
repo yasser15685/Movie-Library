@@ -14,6 +14,9 @@ import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import javax.swing.AbstractListModel;
 
 public class MovieGUI {
 
@@ -50,11 +53,18 @@ public class MovieGUI {
 	private void initialize() {
 		frame = new JFrame();
 		frame.getContentPane().setBackground(Color.LIGHT_GRAY);
-		frame.setBounds(100, 100, 945, 506);
+		frame.setBounds(100, 100, 945, 340);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JButton btnNewButton = new JButton("Add");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				AddGUI Add=new AddGUI();
+				Add.frame.setTitle("Add");
+				Add.frame.setVisible(true);
+			}
+		});
 		btnNewButton.setBounds(10, 11, 89, 23);
 		frame.getContentPane().add(btnNewButton);
 		
@@ -72,6 +82,13 @@ public class MovieGUI {
 		textField.setColumns(10);
 		
 		JButton button = new JButton("?");
+		button.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				HelpGUI Help=new HelpGUI(); 
+				Help.frame.setTitle("Help");
+				Help.frame.setVisible(true);
+			}
+		});
 		button.setBounds(873, 11, 46, 23);
 		frame.getContentPane().add(button);
 		
@@ -84,10 +101,6 @@ public class MovieGUI {
 		comboBox.setBounds(10, 45, 89, 20);
 		frame.getContentPane().add(comboBox);
 		
-		JList list = new JList();
-		list.setBounds(10, 100, 122, 323);
-		frame.getContentPane().add(list);
-		
 		JLabel lblCategories = new JLabel("Categories:");
 		lblCategories.setBounds(10, 75, 89, 14);
 		frame.getContentPane().add(lblCategories);
@@ -97,7 +110,7 @@ public class MovieGUI {
 		frame.getContentPane().add(lblResults);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(162, 100, 757, 323);
+		scrollPane.setBounds(162, 100, 757, 159);
 		frame.getContentPane().add(scrollPane);
 		
 		table = new JTable();
@@ -123,11 +136,27 @@ public class MovieGUI {
 		scrollPane.setViewportView(table);
 		
 		JButton btnMove = new JButton("Move");
-		btnMove.setBounds(830, 434, 89, 23);
+		btnMove.setBounds(830, 270, 89, 23);
 		frame.getContentPane().add(btnMove);
 		
 		JButton btnCopy = new JButton("Copy");
-		btnCopy.setBounds(731, 434, 89, 23);
+		btnCopy.setBounds(731, 270, 89, 23);
 		frame.getContentPane().add(btnCopy);
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(10, 100, 144, 159);
+		frame.getContentPane().add(scrollPane_1);
+		
+		JList list = new JList();
+		list.setModel(new AbstractListModel() {
+			String[] values = new String[] {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Historical", "Horror", "Musical", "Mystery", "Sci-Fi", "Thriller", "War", "Westerns"};
+			public int getSize() {
+				return values.length;
+			}
+			public Object getElementAt(int index) {
+				return values[index];
+			}
+		});
+		scrollPane_1.setViewportView(list);
 	}
 }
