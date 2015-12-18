@@ -5,18 +5,24 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
 import javax.swing.AbstractListModel;
 import javax.swing.JScrollPane;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class AddGUI {
 
 	public JFrame frame;
+	public MovieGUI movieGUI;
 	private JTextField movieName;
 	private JTextField movieYear;
 	private JTextField moviePath;
 	private JTextField movieLink;
+	JList list;
 
 	/**
 	 * Launch the application.
@@ -75,6 +81,19 @@ public class AddGUI {
 		frame.getContentPane().add(btnCancel);
 		
 		JButton btnSave = new JButton("Save");
+		btnSave.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(movieName.getText().equals("")||movieYear.getText().equals("")||moviePath.getText().equals("")||list.isSelectionEmpty())
+				{
+					JOptionPane.showMessageDialog(frame, "Check missing information", "Missing Information Error", JOptionPane.ERROR_MESSAGE );
+				}
+				else{
+				//	String Category = "";
+					//list.
+					//Movie movie = new Movie(movieName.getText(),movieYear.getText(), movieCategory.)
+				}
+			}
+		});
 		btnSave.setBounds(335, 194, 89, 23);
 		frame.getContentPane().add(btnSave);
 		
@@ -100,6 +119,23 @@ public class AddGUI {
 		frame.getContentPane().add(movieLink);
 		
 		JButton btnBrowse = new JButton("Browse");
+		btnBrowse.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				JFileChooser choose=new JFileChooser();
+				
+				choose.setCurrentDirectory(new java.io.File("C:\\"));
+				choose.setDialogTitle("Browse Movie");
+				choose.setFileSelectionMode(JFileChooser.FILES_ONLY);
+				choose.setAcceptAllFileFilterUsed(false);
+				choose.changeToParentDirectory();
+				if(choose.showOpenDialog(null)==JFileChooser.APPROVE_OPTION)
+				{
+					System.out.println(choose.getSelectedFile().getPath());
+					moviePath.setText(choose.getSelectedFile().getPath());
+				}
+								
+			}
+		});
 		btnBrowse.setBounds(340, 58, 84, 23);
 		frame.getContentPane().add(btnBrowse);
 		
@@ -107,7 +143,7 @@ public class AddGUI {
 		scrollPane.setBounds(20, 37, 199, 214);
 		frame.getContentPane().add(scrollPane);
 		
-		JList list = new JList();
+		list = new JList();
 		list.setModel(new AbstractListModel() {
 			String[] values = new String[] {"Action", "Adventure", "Animation", "Comedy", "Crime", "Drama", "Historical", "Horror", "Musical", "Mystery", "Sci-Fi", "Thriller", "War", "Westerns"};
 			public int getSize() {
