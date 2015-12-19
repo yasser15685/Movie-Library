@@ -15,14 +15,16 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractListModel;
 
 public class MovieGUI {
-
+	public ArrayList<Movie> MovieList=new ArrayList<Movie>();
 	private JFrame frame;
 	private JTextField textField;
 	private JTable table;
+	public static MovieGUI window;
 
 	/**
 	 * Launch the application.
@@ -31,7 +33,7 @@ public class MovieGUI {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MovieGUI window = new MovieGUI();
+					window = new MovieGUI();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -61,6 +63,7 @@ public class MovieGUI {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				AddGUI Add=new AddGUI();
+				Add.movieGUI= window;
 				Add.frame.setTitle("Add");
 				Add.frame.setVisible(true);
 			}
